@@ -1,7 +1,7 @@
 # Simple directory to S3 
 ## Features
 * This system will backup folders and upload them to your s3 bucket
-* Every backup is encrypted using [cryptify](https://www.npmjs.com/package/cryptify)
+* Every backup is encrypted using the ZIP encryption algorithm
 * Backups can automatically done every hour
 * Backups can automatically be deleted from your S3-Bucket every x days
 
@@ -15,7 +15,8 @@ Make sure you have `zip` installed on your system: `apt install zip`.
 1. Clone this repo: `git clone https://github.com/SCDerox/simple-directory-to-s3-backup.git`
 2. Install dependencies `npm ci`
 3. Set up a S3-Bucket on AWS
-4. Create a configuration-file called `config.json` in the cloned directory and change the configure parameters (explained below).
+4. Create a configuration-file called `config.json` in the cloned directory and change the configured parameters (
+   explained below).
 5. Then start the script as described below. 
 
 ## Start the system
@@ -38,4 +39,5 @@ You can change these parameters in the `config.json` you created earlier.
 
 
 ## How do I decrypt the encrypted file?
-You can simply use the [cryptify](https://www.npmjs.com/package/cryptify) -cli and remove the `.crypt`-extension from the filename.
+
+Use `unzip <FileName>` to unzip your file. You'll be asked for a password when decrypting.

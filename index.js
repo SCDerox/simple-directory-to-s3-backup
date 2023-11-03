@@ -1,5 +1,4 @@
 const config = require('./config.json');
-const Cryptify = require('cryptify');
 const schedule = require('node-schedule');
 const aws = require('aws-sdk');
 const fs = require('fs');
@@ -36,19 +35,16 @@ async function backup() {
         for (const folder of config.folders) {
             console.log(`Adding ${folder}to zip...`);
             try {
-                await execSync(`zip -r ${filename} ${folder}`);
+                await execSync(`zip -P \"${config.key}\" -r ${filename} ${folder}`);
                 console.log(`Added ${folder}`);
             } catch (e) {
                 console.error(`Error adding `);
             }
         }
-        console.log('Encrypting file..\n');
-        await new Cryptify(`./${filename}`, config.key).encrypt();
-        console.log('Encrypted successfully, uploading to S3...');
         const readStream = fs.createReadStream(`./${filename}`);
         s3bucket.upload({
             Bucket: config.bucketID,
-            Key: config.path + '/' + `${filename}.crypto`,
+            Key: config.path + '/' + `${filename}`,
             Body: readStream
         }, function (err) {
             if (err) return console.error(`Error uploading: ${err}`);
