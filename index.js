@@ -33,7 +33,7 @@ async function backup() {
         const date = new Date();
         const filename = `backup-${config.prefix}-${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}-${date.getHours()}:${date.getMinutes()}.zip`;
         for (const folder of config.folders) {
-            console.log(`Adding ${folder}to zip...`);
+            console.log(`Adding ${folder} to zip...`);
             try {
                 await execSync(`zip -P \"${config.key}\" -r ${filename} ${folder}`);
                 console.log(`Added ${folder}`);
