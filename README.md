@@ -10,6 +10,8 @@ Probably not tbh. It's quite complicated to set up, and the project only hase a 
 `Why is it called "Simple.." if it's complicated to set up? ~ I am very glad you asked, it's because the code is quite simple and it took not a very long time to develop this "thing".`
 
 ## Installation
+Make sure you have `zip` installed on your system: `apt install zip`.
+
 1. Clone this repo: `git clone https://github.com/SCDerox/simple-directory-to-s3-backup.git`
 2. Install dependencies `npm ci`
 3. Set up a S3-Bucket on AWS
@@ -27,9 +29,7 @@ You can change these parameters in the `config.json` you created earlier.
 * `path`: Path on your S3-Bucket in which the backup should be saved
 * `enabledHourlyUpload`: If enabled the script will backup your files hourly
 * `limitHoursTo`: Array of strings; Hours to limit the hourly upload to
-* `folders`: Array of the following objects:
-    * `localFolder`: Path to your local folder to back up
-    * `zipFolder`: Path to the backuped folder inside the ZIP
+* `folders`: Array of the following paths that should get backed up
 * `runCommandsBeforeExecution`: Array of commands to run before execution (for example `mysqldump`or something)
 * `bucketID`: ID of your S3-Bucket
 * `accessKeyID`: ID of your access-key
