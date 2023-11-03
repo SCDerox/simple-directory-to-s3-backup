@@ -32,7 +32,7 @@ async function backup() {
         }
         console.log('Backing up...');
         const date = new Date();
-        const filename = `tmp/backup-${config.prefix}-${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}-${date.getHours()}:${date.getMinutes()}.zip`;
+        const filename = `backup-${config.prefix}-${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}-${date.getHours()}:${date.getMinutes()}.zip`;
         for (const folder of config.folders) {
             console.log(`Adding ${folder}to zip...`);
             try {
