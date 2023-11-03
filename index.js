@@ -32,7 +32,7 @@ async function backup() {
         }
         console.log('Backing up...');
         const date = new Date();
-        const filename = `backup-${config.prefix}-${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}-${date.getHours()}:${date.getMinutes()}.zip`;
+        const filename = `tmp/backup-${config.prefix}-${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}-${date.getHours()}:${date.getMinutes()}.zip`;
         for (const folder of config.folders) {
             console.log(`Adding ${folder}to zip...`);
             try {
@@ -43,9 +43,9 @@ async function backup() {
             }
         }
         console.log('Encrypting file..\n');
-        await new Cryptify(`./tmp/${filename}`, config.key).encrypt();
+        await new Cryptify(`./${filename}`, config.key).encrypt();
         console.log('Encrypted successfully, uploading to S3...');
-        const readStream = fs.createReadStream(`./tmp/${filename}`);
+        const readStream = fs.createReadStream(`./${filename}`);
         s3bucket.upload({
             Bucket: config.bucketID,
             Key: config.path + '/' + `${filename}.crypto`,
@@ -53,7 +53,7 @@ async function backup() {
         }, function (err) {
             if (err) return console.error(`Error uploading: ${err}`);
             console.log('Uploaded successfully');
-            fs.unlinkSync(`./tmp/${filename}`);
+            fs.unlinkSync(`./${filename}`);
         });
         if (config.deleteItems) {
             s3bucket.listObjects({Bucket: config.bucketID, Prefix: `${config.path}`}, (err, res) => {
