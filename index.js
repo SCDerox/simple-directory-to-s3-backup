@@ -37,7 +37,7 @@ async function backup() {
         for (const folder of config.folders) {
             console.log(`Adding ${folder} to zip...`);
             try {
-                await execSync(`zip -q -P \"${config.key}\" -r ${filename} ${folder}`);
+                await execSync(`cd ${config.rootDir || '.'} && zip -q -P \"${config.key}\" -r ${__dirname}/${filename} ${folder}`);
                 console.log(`Added ${folder}`);
             } catch (e) {
                 console.error(`Error adding `, e);
