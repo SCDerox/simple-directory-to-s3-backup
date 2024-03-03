@@ -14,7 +14,9 @@ if (config.enabledHourlyUpload) {
 
 const s3bucket = new aws.S3({
     accessKeyId: config.accessKeyId,
-    secretAccessKey: config.secretAccessKey
+    secretAccessKey: config.secretAccessKey,
+    s3BucketEndpoint: config.s3BucketEndpoint,
+    endpoint: config.endpoint
 });
 
 
