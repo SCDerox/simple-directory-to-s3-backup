@@ -37,10 +37,10 @@ async function backup() {
         for (const folder of config.folders) {
             console.log(`Adding ${folder} to zip...`);
             try {
-                await execSync(`zip -P \"${config.key}\" -r ${filename} ${folder}`);
+                await execSync(`zip -q -P \"${config.key}\" -r ${filename} ${folder}`);
                 console.log(`Added ${folder}`);
             } catch (e) {
-                console.error(`Error adding `);
+                console.error(`Error adding `, e);
             }
         }
         const readStream = fs.createReadStream(`./${filename}`);
