@@ -51,7 +51,7 @@ async function backup() {
         }, function (err) {
             if (err) return console.error(`Error uploading: ${err}`);
             console.log('Uploaded successfully');
-            fs.unlinkSync(`./${filename}`);
+            fs.unlinkSync(`${__dirname}/${filename}`);
         });
         if (config.deleteItems) {
             s3bucket.listObjects({Bucket: config.bucketID, Prefix: `${config.path}`}, (err, res) => {
