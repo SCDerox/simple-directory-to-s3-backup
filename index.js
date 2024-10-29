@@ -16,13 +16,14 @@ const s3bucket = new aws.S3({
     accessKeyId: config.accessKeyId,
     secretAccessKey: config.secretAccessKey,
     s3BucketEndpoint: config.s3BucketEndpoint,
-    endpoint: config.endpoint
+    endpoint: config.endpoint,
+    region: config.bucketRegion
 });
 
 
 async function backup() {
     return new Promise((async resolve => {
-        for (const command of config.runCommandsBeforeExecution) {
+        for (const command of config.runCommandsBeforeExecution || []) {
             console.log(`Running ${command}`);
             try {
                 await execSync(command);
@@ -47,11 +48,13 @@ async function backup() {
         s3bucket.upload({
             Bucket: config.bucketID,
             Key: config.path + '/' + `${filename}`,
-            Body: readStream
+            Body: readStream,
+            ServerSideEncryption: 'AES256',
+            StorageClass: 'STANDARD_IA'
         }, function (err) {
-            if (err) return console.error(`Error uploading: ${err}`);
-            console.log('Uploaded successfully');
             fs.unlinkSync(`${__dirname}/${filename}`);
+            if (err) return console.error(`Error uploading:`, err);
+            console.log('Uploaded successfully');
         });
         if (config.deleteItems) {
             s3bucket.listObjects({Bucket: config.bucketID, Prefix: `${config.path}`}, (err, res) => {

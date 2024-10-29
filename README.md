@@ -34,8 +34,12 @@ You can change these parameters in the `config.json` you created earlier.
 * `runCommandsBeforeExecution`: Array of commands to run before execution (for example `mysqldump`or something)
 * `bucketID`: ID of your S3-Bucket
 * `accessKeyID`: ID of your access-key
+* `bucketRegion`: Region of your bucket
 * `secretAccessKey`: Secret of your access-key
-* `deleteItems`: If enabled, items will be deleted automatically (in the specified folder) if they are older than `daysBeforeDeletion`
+* `deleteItems`: If enabled, S3 objects will be deleted automatically (in the specified folder) if they are older than
+  `daysBeforeDeletion`. We suggest using lifecycle rules is supported by your S3 provider.
+* `doNotDeleteLocalBackup`: By default local backup files will be deleted after they have been uploaded. Enable this
+  option do disable this behavior.
 
 
 ## How do I decrypt the encrypted file?
